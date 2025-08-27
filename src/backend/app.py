@@ -25,7 +25,7 @@ app.config["JWT_COOKIE_SAMESITE"] = "Lax"
 mongo = PyMongo(app)
 jwt = JWTManager(app)
 # This CORS setup is confirmed to work for this exact scenario
-CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
+CORS(app, supports_credentials=True, origins=["http://localhost:3000", "https://vercel.com/nishyanths-projects/habit-hero/Dd1FvDfaucG4yc3oPEmUmMHfYPjJ"])
 
 # --- MongoDB Collection References ---
 try:
