@@ -47,7 +47,7 @@ export default function SignIn() {
 
     try {
       const apiUrl = process.env.REACT_APP_API_URL;
-      const response = await fetch(`${apiUrl}/api/habits`, {
+      const response = await fetch(`${apiUrl}/api/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
