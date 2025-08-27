@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import '../Styles/AddHabitModal.css';
+import '../Styles/AddHabitModal.css'; // Corrected Path
 import { X, Award, Book, Heart, Briefcase, Clock } from 'lucide-react';
 
 const categories = [
@@ -29,7 +29,6 @@ const TimePicker = ({ value, onChange }) => {
   const handleScrollTo = (ref, value, list) => {
     if (ref.current) {
       const index = list.indexOf(value);
-      // Assumes each item has a height of 36px from the CSS
       ref.current.scrollTo({ top: index * 36, behavior: 'smooth' });
     }
   };
@@ -45,6 +44,7 @@ const TimePicker = ({ value, onChange }) => {
             </div>
           ))}
         </div>
+        <div className="time-picker-colon">:</div> {/* Added Colon */}
         <div className="time-scroll-wheel" ref={minutesRef}>
           {minutes.map(m => (
             <div key={`minute-${m}`} className={`time-option ${minute === m ? 'selected' : ''}`} 
@@ -92,12 +92,22 @@ export default function AddHabitModal({ isOpen, onClose, onSave }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name) return;
+    console.log("Checkpoint 1: handleSubmit function was called."); // DEBUG LOG
+
+    if (!name) {
+      console.log("Checkpoint 2: FAILED. Habit name is empty."); // DEBUG LOG
+      return;
+    }
     
     const finalCategory = isCustom ? customCategory : category;
-    if (!finalCategory) return; // Don't save if custom category is empty
+    if (!finalCategory || (isCustom && !customCategory.trim())) {
+      console.log("Checkpoint 2: FAILED. Category is empty."); // DEBUG LOG
+      return;
+    }
 
-    onSave({
+    console.log("Checkpoint 2: PASSED. Form data is valid."); // DEBUG LOG
+
+    const habitData = {
       name,
       category: finalCategory,
       frequency,
@@ -106,7 +116,11 @@ export default function AddHabitModal({ isOpen, onClose, onSave }) {
       notificationTime: notifications ? notificationTime : null,
       streak: 0,
       completedToday: false,
-    });
+    };
+
+    console.log("Checkpoint 3: Preparing to save habit with this data:", habitData); // DEBUG LOG
+    onSave(habitData);
+    
     // Reset form and close
     setName('');
     setCategory('Health');

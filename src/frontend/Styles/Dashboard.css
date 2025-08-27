@@ -430,6 +430,79 @@ body.dark-theme {
   margin-top: 0.5rem;
 }
 
+.calendar-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: var(--card-bg);
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.calendar-month-year {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.calendar-nav-btn {
+  background: none;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s ease;
+}
+
+.calendar-nav-btn:hover {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.calendar-weekday {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.calendar-day {
+  font-size: 0.875rem;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.calendar-day:not(.empty):hover {
+  background-color: var(--accent-light);
+  cursor: pointer;
+}
+
+.calendar-day.today {
+  background-color: var(--accent-color);
+  color: var(--brand-black);
+  font-weight: 700;
+}
+
+
+
 /* --- Responsive Design --- */
 @media (max-width: 1200px) {
   .dashboard-container {

@@ -19,7 +19,7 @@ function App() {
     <Router>
       <Routes>
         {/* Opening Page */}
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<OpeningPage />} />
 
         {/* Sign In Page */}
         <Route path="/signin" element={<SignIn />} />
