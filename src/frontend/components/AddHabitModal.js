@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../Styles/AddHabitModal.css';
-import { X, Award, Book, Heart, Briefcase, Clock, Calendar as CalendarIcon } from 'lucide-react';
+import { X, Award, Book, Heart, Briefcase, Calendar as CalendarIcon } from 'lucide-react';
 
 const presetCategories = [
   { name: 'Health', icon: <Heart size={20} /> },

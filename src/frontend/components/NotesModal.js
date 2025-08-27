@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../Styles/NotesModal.css'; // New CSS file for this modal
-import { X, MessageSquare } from 'lucide-react';
+import { X} from 'lucide-react';
 
 export default function NotesModal({ isOpen, onClose, habit, onSaveNote }) {
   const [newNote, setNewNote] = useState('');

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../Styles/Analytics.css';
-import { BarChart, Zap, Target, BrainCircuit, Award, Star, ShieldCheck, Coffee, Heart, X } from 'lucide-react';
+import {Zap, Target, BrainCircuit, Award, Star, ShieldCheck, Coffee, Heart, X } from 'lucide-react';
 
 // --- Achievements Definition ---
 const allAchievements = [
