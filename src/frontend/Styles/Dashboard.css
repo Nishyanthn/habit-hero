@@ -377,6 +377,59 @@ body.dark-theme {
   color: #9ca3af;
 }
 
+
+.habit-card-header {
+  position: relative;
+  /* ... other styles ... */
+}
+
+.habit-options {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.habit-card:hover .habit-options {
+  opacity: 1;
+}
+
+.option-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 50%;
+}
+
+.option-btn:hover {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.no-habits-message {
+  grid-column: 1 / -1; /* Span across all columns */
+  text-align: center;
+  padding: 4rem;
+  background-color: var(--card-bg);
+  border: 2px dashed var(--border-color);
+  border-radius: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.no-habits-message h3 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+.no-habits-message p {
+  margin-top: 0.5rem;
+}
+
 /* --- Responsive Design --- */
 @media (max-width: 1200px) {
   .dashboard-container {
