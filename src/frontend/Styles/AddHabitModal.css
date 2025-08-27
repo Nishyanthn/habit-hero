@@ -382,3 +382,40 @@ input:checked + .slider:before {
 .modal-form::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+/* --- Add these styles to your existing AddHabitModal.css file --- */
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.date-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding-left: 0.75rem;
+  background-color: var(--bg-gradient-start);
+}
+
+.date-input-wrapper svg {
+  color: var(--text-secondary);
+  margin-right: 0.5rem;
+}
+
+.date-input-wrapper input[type="date"] {
+  border: none;
+  background: none;
+  padding: 0.75rem 0.5rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: var(--font-family);
+  width: 100%;
+}
+
+.date-input-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
+  background-image: none;
+  cursor: pointer;
+}
+

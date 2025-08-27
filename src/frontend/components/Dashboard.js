@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import '../Styles/Dashboard.css';
-import { Plus, Target, TrendingUp, CheckCircle, XCircle, Zap, Award, Book, Heart, Briefcase, Sun, Moon, LogOut, Edit, Trash2, ChevronLeft, ChevronRight, MessageSquare } from 'lucide-react';
+import { Plus, Target, TrendingUp, CheckCircle, XCircle, Zap, Award, Book, Heart, Briefcase, Sun, Moon, LogOut, Edit, Trash2, ChevronLeft, ChevronRight, MessageSquare, Trophy } from 'lucide-react';
 import AddHabitModal from './AddHabitModal';
 import Analytics from './Analytics';
-import NotesModal from './NotesModal'; // Import the new NotesModal
+import NotesModal from './NotesModal';
 
 const getCategoryIcon = (category) => {
   switch (category?.toLowerCase()) {
@@ -56,7 +56,7 @@ export default function Dashboard() {
   const [editingHabit, setEditingHabit] = useState(null);
   const [viewingNotesFor, setViewingNotesFor] = useState(null);
   const [user] = useState({ name: 'Nishyanth' });
-  const [stats, setStats] = useState({ successRate: 0, longestStreak: 0, habitsCompleted: 0 });
+  const [stats, setStats] = useState({ successRate: 0, longestStreak: 0, habitsCompleted: 0, bestHabit: null });
   const [activePage, setActivePage] = useState('dashboard');
 
   const toggleTheme = () => setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
@@ -67,8 +67,16 @@ export default function Dashboard() {
     const completed = habits.filter(h => h.completedToday).length;
     const total = habits.length;
     const successRate = total > 0 ? Math.round((completed / total) * 100) : 0;
-    const longestStreak = habits.length > 0 ? Math.max(0, ...habits.map(h => h.streak)) : 0;
-    setStats({ successRate, longestStreak, habitsCompleted: completed });
+    
+    let longestStreak = 0;
+    let bestHabit = null;
+    if (habits.length > 0) {
+        // Find the habit with the highest streak
+        bestHabit = habits.reduce((prev, current) => (prev.streak > current.streak) ? prev : current);
+        longestStreak = bestHabit.streak;
+    }
+
+    setStats({ successRate, longestStreak, habitsCompleted: completed, bestHabit });
   }, [habits]);
 
   const handleAddClick = () => { setEditingHabit(null); setIsAddEditModalOpen(true); };
@@ -96,12 +104,7 @@ export default function Dashboard() {
 
   const handleSaveNote = (habitId, noteText) => {
     const newNote = { text: noteText, date: new Date().toISOString() };
-    setHabits(habits.map(h => 
-        h._id === habitId 
-          ? { ...h, notes: [...(h.notes || []), newNote] } 
-          : h
-    ));
-    // Also update the habit being viewed in the modal to see the new note instantly
+    setHabits(habits.map(h => h._id === habitId ? { ...h, notes: [...(h.notes || []), newNote] } : h));
     setViewingNotesFor(prev => ({...prev, notes: [...(prev.notes || []), newNote]}));
   };
 
@@ -164,7 +167,7 @@ export default function Dashboard() {
           <div className="stats-card">
             <div className="stat-item"><div className="stat-icon-wrapper" style={{ backgroundColor: 'var(--accent-light)' }}><Target className="stat-icon" style={{ color: 'var(--accent-dark)' }} /></div><div className="stat-info"><span className="stat-value">{stats.successRate}%</span><span className="stat-label">Today's Success</span></div></div>
             <div className="stat-item"><div className="stat-icon-wrapper" style={{ backgroundColor: 'hsla(142, 71%, 85%, 1)' }}><TrendingUp className="stat-icon" style={{ color: 'hsla(142, 71%, 45%, 1)' }} /></div><div className="stat-info"><span className="stat-value">{stats.longestStreak} Days</span><span className="stat-label">Longest Streak</span></div></div>
-            <div className="stat-item"><div className="stat-icon-wrapper" style={{ backgroundColor: 'hsla(231, 89%, 90%, 1)' }}><Award className="stat-icon" style={{ color: 'hsla(231, 89%, 60%, 1)' }} /></div><div className="stat-info"><span className="stat-value">{stats.habitsCompleted}</span><span className="stat-label">Completed Today</span></div></div>
+            <div className="stat-item"><div className="stat-icon-wrapper" style={{ backgroundColor: 'hsla(51, 98%, 85%, 1)' }}><Trophy className="stat-icon" style={{ color: 'hsla(51, 98%, 50%, 1)' }} /></div><div className="stat-info"><span className="stat-value">{stats.bestHabit ? stats.bestHabit.name : 'N/A'}</span><span className="stat-label">Best Habit</span></div></div>
           </div>
           <Calendar />
         </aside>

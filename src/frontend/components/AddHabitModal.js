@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../Styles/AddHabitModal.css';
-import { X, Award, Book, Heart, Briefcase, Clock } from 'lucide-react';
+import { X, Award, Book, Heart, Briefcase, Clock, Calendar as CalendarIcon } from 'lucide-react';
 
 const presetCategories = [
   { name: 'Health', icon: <Heart size={20} /> },
@@ -9,8 +9,20 @@ const presetCategories = [
 ];
 const daysOfWeek = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
+// Helper to format date to YYYY-MM-DD for the input
+const formatDate = (date) => {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+};
+
 const TimePicker = ({ value, onChange }) => {
-    // TimePicker component code remains the same...
     const [hour, setHour] = useState('08');
     const [minute, setMinute] = useState('30');
     const [period, setPeriod] = useState('AM');
@@ -41,8 +53,8 @@ export default function AddHabitModal({ isOpen, onClose, onSave, habitToEdit }) 
   const [selectedDays, setSelectedDays] = useState([]);
   const [notifications, setNotifications] = useState(false);
   const [notificationTime, setNotificationTime] = useState('08:30 AM');
+  const [startDate, setStartDate] = useState(formatDate(new Date())); // New state for start date
 
-  // This effect pre-fills the form when editing a habit
   useEffect(() => {
     if (habitToEdit) {
       setName(habitToEdit.name);
@@ -50,8 +62,8 @@ export default function AddHabitModal({ isOpen, onClose, onSave, habitToEdit }) 
       setSelectedDays(habitToEdit.days || []);
       setNotifications(habitToEdit.notifications || false);
       setNotificationTime(habitToEdit.notificationTime || '08:30 AM');
+      setStartDate(habitToEdit.startDate ? formatDate(habitToEdit.startDate) : formatDate(new Date()));
 
-      // Handle category
       const isPreset = presetCategories.some(p => p.name === habitToEdit.category);
       if (isPreset) {
         setIsCustom(false);
@@ -62,7 +74,6 @@ export default function AddHabitModal({ isOpen, onClose, onSave, habitToEdit }) 
         setCustomCategory(habitToEdit.category);
       }
     } else {
-      // Reset form to default values for adding a new habit
       setName('');
       setCategory('Health');
       setCustomCategory('');
@@ -70,6 +81,7 @@ export default function AddHabitModal({ isOpen, onClose, onSave, habitToEdit }) 
       setFrequency('Daily');
       setSelectedDays([]);
       setNotifications(false);
+      setStartDate(formatDate(new Date()));
     }
   }, [habitToEdit, isOpen]);
 
@@ -87,6 +99,7 @@ export default function AddHabitModal({ isOpen, onClose, onSave, habitToEdit }) 
       name,
       category: finalCategory,
       frequency,
+      startDate, // Include start date in saved data
       days: frequency === 'Weekly' ? selectedDays : [],
       notifications,
       notificationTime: notifications ? notificationTime : null,
@@ -104,10 +117,26 @@ export default function AddHabitModal({ isOpen, onClose, onSave, habitToEdit }) 
           <button onClick={onClose} className="close-btn"><X size={24} /></button>
         </div>
         <form onSubmit={handleSubmit} className="modal-form">
-          {/* Form fields remain the same */}
           <div className="form-group"><label htmlFor="habit-name">Habit Name</label><input id="habit-name" type="text" placeholder="e.g., Read for 20 minutes" value={name} onChange={(e) => setName(e.target.value)} required/></div>
           <div className="form-group"><label>Category</label><div className="category-selector">{presetCategories.map((cat) => (<button type="button" key={cat.name} className={`category-btn ${!isCustom && category === cat.name ? 'selected' : ''}`} onClick={() => handleCategoryClick(cat.name)}>{cat.icon}<span>{cat.name}</span></button>))} <button type="button" className={`category-btn ${isCustom ? 'selected' : ''}`} onClick={handleOtherClick}><Award size={20} /><span>Other</span></button></div>{isCustom && (<input type="text" placeholder="Enter your category" value={customCategory} onChange={(e) => setCustomCategory(e.target.value)} className="custom-category-input" required/>)}</div>
-          <div className="form-group"><label>Frequency</label><div className="frequency-selector"><label className={frequency === 'Daily' ? 'selected' : ''}><input type="radio" name="frequency" value="Daily" checked={frequency === 'Daily'} onChange={(e) => setFrequency(e.target.value)} />Daily</label><label className={frequency === 'Weekly' ? 'selected' : ''}><input type="radio" name="frequency" value="Weekly" checked={frequency === 'Weekly'} onChange={(e) => setFrequency(e.target.value)} />Weekly</label></div></div>
+          
+          <div className="form-row">
+            <div className="form-group">
+                <label>Frequency</label>
+                <div className="frequency-selector">
+                    <label className={frequency === 'Daily' ? 'selected' : ''}><input type="radio" name="frequency" value="Daily" checked={frequency === 'Daily'} onChange={(e) => setFrequency(e.target.value)} />Daily</label>
+                    <label className={frequency === 'Weekly' ? 'selected' : ''}><input type="radio" name="frequency" value="Weekly" checked={frequency === 'Weekly'} onChange={(e) => setFrequency(e.target.value)} />Weekly</label>
+                </div>
+            </div>
+            <div className="form-group">
+                <label htmlFor="start-date">Start Date</label>
+                <div className="date-input-wrapper">
+                    <CalendarIcon size={20} />
+                    <input id="start-date" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
+                </div>
+            </div>
+          </div>
+
           {frequency === 'Weekly' && (<div className="form-group day-selector-group"><label>On Which Days?</label><div className="day-selector">{daysOfWeek.map(day => (<button type="button" key={day} className={`day-btn ${selectedDays.includes(day) ? 'selected' : ''}`} onClick={() => handleDayClick(day)}>{day}</button>))}</div></div>)}
           <div className="form-group notification-group"><label>Daily Notification</label><label className="switch"><input type="checkbox" checked={notifications} onChange={(e) => setNotifications(e.target.checked)} /><span className="slider"></span></label></div>
           {notifications && (<div className="form-group time-picker-group"><TimePicker value={notificationTime} onChange={setNotificationTime} /></div>)}
