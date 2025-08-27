@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// We remove useNavigate since we are not redirecting based on API calls anymore
-// import { useNavigate } from 'react-router-dom'; 
 import '../Styles/Dashboard.css';
 import { Plus, Target, TrendingUp, CheckCircle, XCircle, Zap, Award, Book, Heart, Briefcase, Sun, Moon, LogOut, Edit, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
 import AddHabitModal from './AddHabitModal';
@@ -14,130 +12,95 @@ const getCategoryIcon = (category) => {
   }
 };
 
-// --- Calendar Component ---
 const Calendar = () => {
-  const [date, setDate] = useState(new Date());
-
-  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const daysOfWeek = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-
-  const year = date.getFullYear();
-  const month = date.getMonth();
-
-  const firstDayOfMonth = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-  const handlePrevMonth = () => {
-    setDate(new Date(year, month - 1, 1));
-  };
-
-  const handleNextMonth = () => {
-    setDate(new Date(year, month + 1, 1));
-  };
-
-  const renderDays = () => {
-    const days = [];
-    // Padding for previous month's days
-    for (let i = 0; i < firstDayOfMonth; i++) {
-      days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
-    }
-    // Current month's days
-    for (let i = 1; i <= daysInMonth; i++) {
-      const isToday = i === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear();
-      days.push(
-        <div key={i} className={`calendar-day ${isToday ? 'today' : ''}`}>
-          {i}
+    // Calendar component code remains the same...
+    const [date, setDate] = useState(new Date());
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const daysOfWeek = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDayOfMonth = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const handlePrevMonth = () => setDate(new Date(year, month - 1, 1));
+    const handleNextMonth = () => setDate(new Date(year, month + 1, 1));
+    const renderDays = () => {
+        const days = [];
+        for (let i = 0; i < firstDayOfMonth; i++) {
+            days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
+        }
+        for (let i = 1; i <= daysInMonth; i++) {
+            const isToday = i === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear();
+            days.push(<div key={i} className={`calendar-day ${isToday ? 'today' : ''}`}>{i}</div>);
+        }
+        return days;
+    };
+    return (
+        <div className="calendar-container">
+            <div className="calendar-header">
+                <button onClick={handlePrevMonth} className="calendar-nav-btn"><ChevronLeft size={20} /></button>
+                <h3 className="calendar-month-year">{monthNames[month]} {year}</h3>
+                <button onClick={handleNextMonth} className="calendar-nav-btn"><ChevronRight size={20} /></button>
+            </div>
+            <div className="calendar-grid">
+                {daysOfWeek.map(day => <div key={day} className="calendar-weekday">{day}</div>)}
+                {renderDays()}
+            </div>
         </div>
-      );
-    }
-    return days;
-  };
-
-  return (
-    <div className="calendar-container">
-      <div className="calendar-header">
-        <button onClick={handlePrevMonth} className="calendar-nav-btn"><ChevronLeft size={20} /></button>
-        <h3 className="calendar-month-year">{monthNames[month]} {year}</h3>
-        <button onClick={handleNextMonth} className="calendar-nav-btn"><ChevronRight size={20} /></button>
-      </div>
-      <div className="calendar-grid">
-        {daysOfWeek.map(day => <div key={day} className="calendar-weekday">{day}</div>)}
-        {renderDays()}
-      </div>
-    </div>
-  );
+    );
 };
-
 
 export default function Dashboard() {
   const [theme, setTheme] = useState('light');
-  const [habits, setHabits] = useState([]); // This is now our only source of truth for habits
+  const [habits, setHabits] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [user] = useState({ name: 'Nishyanth' }); // Static user for UI purposes
-  const [stats, setStats] = useState({
-    successRate: 0,
-    currentStreak: 0,
-    longestStreak: 0,
-    habitsCompleted: 0,
-  });
+  const [editingHabit, setEditingHabit] = useState(null); // State to track the habit being edited
+  const [user] = useState({ name: 'Nishyanth' });
+  const [stats, setStats] = useState({ successRate: 0, longestStreak: 0, habitsCompleted: 0 });
 
-  // Theme Management remains the same
   const toggleTheme = () => setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   
   useEffect(() => {
     document.body.className = `${theme}-theme`;
   }, [theme]);
 
-  // --- Calculate Stats ---
   useEffect(() => {
     const completed = habits.filter(h => h.completedToday).length;
     const total = habits.length;
     const successRate = total > 0 ? Math.round((completed / total) * 100) : 0;
-    
-    // NOTE: Streak logic would be more complex with a backend and historical data.
-    // This is a simplified version for local state.
-    const currentStreak = total > 0 && successRate === 100 ? (stats.currentStreak + 1) : 0;
-
-    setStats(prevStats => ({
-      successRate,
-      habitsCompleted: completed,
-      currentStreak: currentStreak,
-      longestStreak: Math.max(prevStats.longestStreak, currentStreak),
-    }));
+    setStats(prev => ({ ...prev, successRate, habitsCompleted: completed }));
   }, [habits]);
 
+  const handleAddClick = () => {
+    setEditingHabit(null); // Ensure we are in "add" mode
+    setIsModalOpen(true);
+  };
 
-  // --- LOCAL STATE MANAGEMENT FUNCTIONS ---
+  const handleEditClick = (habit) => {
+    setEditingHabit(habit); // Set the habit to edit
+    setIsModalOpen(true);
+  };
 
-  const handleAddHabit = (newHabit) => {
-    // We add the new habit directly to our state array with a temporary ID
-    setHabits(prevHabits => [
-      ...prevHabits, 
-      { ...newHabit, _id: Date.now().toString() } // Use a temporary unique ID
-    ]);
+  const handleSaveHabit = (habitData) => {
+    if (editingHabit) {
+      // Update existing habit
+      setHabits(habits.map(h => h._id === editingHabit._id ? { ...h, ...habitData } : h));
+    } else {
+      // Add new habit
+      setHabits([...habits, { ...habitData, _id: Date.now().toString(), streak: 0, completedToday: false }]);
+    }
+    setEditingHabit(null); // Reset editing state
   };
   
   const handleDeleteHabit = (habitId) => {
-    // We filter the state array to remove the habit
-    setHabits(prevHabits => prevHabits.filter(habit => habit._id !== habitId));
+    setHabits(habits.filter(h => h._id !== habitId));
   };
   
   const handleToggleComplete = (habitToUpdate) => {
-    // We map over the state array to update the specific habit
-    setHabits(prevHabits => 
-      prevHabits.map(habit => 
-        habit._id === habitToUpdate._id 
-          ? { ...habit, completedToday: !habit.completedToday, streak: habit.completedToday ? habit.streak -1 : habit.streak + 1 } 
-          : habit
-      )
-    );
-  };
-
-  const handleLogout = () => {
-    // In a real app, this would also clear local storage/state management
-    // For now, it can just navigate. Or you can link it to the signin page.
-    console.log("Logging out...");
-    // navigate('/signin');
+    setHabits(habits.map(h => 
+        h._id === habitToUpdate._id 
+          ? { ...h, completedToday: !h.completedToday, streak: h.completedToday ? h.streak - 1 : h.streak + 1 } 
+          : h
+    ));
   };
 
   const greeting = new Date().getHours() < 12 ? 'Good Morning' : 'Good Evening';
@@ -147,7 +110,8 @@ export default function Dashboard() {
       <AddHabitModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        onSave={handleAddHabit}
+        onSave={handleSaveHabit}
+        habitToEdit={editingHabit} // Pass the habit to the modal
       />
       <div className="dashboard-container">
         <aside className="sidebar">
@@ -156,14 +120,14 @@ export default function Dashboard() {
             <div className="user-avatar">{user.name?.charAt(0)}</div>
             <span className="user-name">{user.name}</span>
           </div>
-          <button className="add-habit-btn" onClick={() => setIsModalOpen(true)}><Plus size={20} /><span>Add New Habit</span></button>
+          <button className="add-habit-btn" onClick={handleAddClick}><Plus size={20} /><span>Add New Habit</span></button>
           <nav className="sidebar-nav">
             <a href="#" className="nav-item active">Dashboard</a>
             <a href="#" className="nav-item">Analytics</a>
             <a href="#" className="nav-item">Settings</a>
           </nav>
           <div className="sidebar-footer">
-            <button className="logout-btn" onClick={handleLogout}><LogOut size={16} /><span>Log Out</span></button>
+            <button className="logout-btn"><LogOut size={16} /><span>Log Out</span></button>
           </div>
         </aside>
         <main className="main-content">
@@ -184,7 +148,7 @@ export default function Dashboard() {
                     <span className="habit-category">{habit.category}</span>
                   </div>
                   <div className="habit-options">
-                    <button className="option-btn"><Edit size={16} /></button>
+                    <button className="option-btn" onClick={() => handleEditClick(habit)}><Edit size={16} /></button>
                     <button className="option-btn" onClick={() => handleDeleteHabit(habit._id)}><Trash2 size={16} /></button>
                   </div>
                 </div>
@@ -207,40 +171,23 @@ export default function Dashboard() {
           </div>
         </main>
         <aside className="stats-panel">
-        <div className="stats-header">
-          <h2>Your Progress</h2>
-        </div>
-        <div className="stats-card">
-          <div className="stat-item">
-            <div className="stat-icon-wrapper" style={{ backgroundColor: 'var(--accent-light)' }}>
-              <Target className="stat-icon" style={{ color: 'var(--accent-dark)' }} />
+          <div className="stats-header"><h2>Your Progress</h2></div>
+          <div className="stats-card">
+            <div className="stat-item">
+              <div className="stat-icon-wrapper" style={{ backgroundColor: 'var(--accent-light)' }}><Target className="stat-icon" style={{ color: 'var(--accent-dark)' }} /></div>
+              <div className="stat-info"><span className="stat-value">{stats.successRate}%</span><span className="stat-label">Success Rate</span></div>
             </div>
-            <div className="stat-info">
-              <span className="stat-value">{stats.successRate}%</span>
-              <span className="stat-label">Success Rate</span>
+            <div className="stat-item">
+              <div className="stat-icon-wrapper" style={{ backgroundColor: 'hsla(142, 71%, 85%, 1)' }}><TrendingUp className="stat-icon" style={{ color: 'hsla(142, 71%, 45%, 1)' }} /></div>
+              <div className="stat-info"><span className="stat-value">{stats.longestStreak} Days</span><span className="stat-label">Longest Streak</span></div>
             </div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-icon-wrapper" style={{ backgroundColor: 'hsla(142, 71%, 85%, 1)' }}>
-              <TrendingUp className="stat-icon" style={{ color: 'hsla(142, 71%, 45%, 1)' }} />
-            </div>
-            <div className="stat-info">
-              <span className="stat-value">{stats.longestStreak} Days</span>
-              <span className="stat-label">Longest Streak</span>
+            <div className="stat-item">
+              <div className="stat-icon-wrapper" style={{ backgroundColor: 'hsla(231, 89%, 90%, 1)' }}><Award className="stat-icon" style={{ color: 'hsla(231, 89%, 60%, 1)' }} /></div>
+              <div className="stat-info"><span className="stat-value">{stats.habitsCompleted}</span><span className="stat-label">Habits Completed</span></div>
             </div>
           </div>
-           <div className="stat-item">
-            <div className="stat-icon-wrapper" style={{ backgroundColor: 'hsla(231, 89%, 90%, 1)' }}>
-              <Award className="stat-icon" style={{ color: 'hsla(231, 89%, 60%, 1)' }} />
-            </div>
-            <div className="stat-info">
-              <span className="stat-value">{stats.habitsCompleted}</span>
-              <span className="stat-label">Habits Completed</span>
-            </div>
-          </div>
-        </div>
-        <Calendar />
-      </aside>
+          <Calendar />
+        </aside>
       </div>
     </>
   );

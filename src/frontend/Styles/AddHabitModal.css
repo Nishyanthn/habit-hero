@@ -353,3 +353,32 @@ input:checked + .slider:before {
 .btn-save:hover {
   background-color: var(--accent-dark);
 }
+
+.modal-content {
+  /* ... other styles ... */
+  max-height: 90vh; /* Set a maximum height */
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-form {
+  overflow-y: auto; /* Make the form itself scrollable */
+  padding-right: 1rem; /* Add some padding to avoid scrollbar overlap */
+  margin-right: -1rem; /* Counteract the padding for alignment */
+}
+
+/* Custom scrollbar for a cleaner look */
+.modal-form::-webkit-scrollbar {
+  width: 8px;
+}
+.modal-form::-webkit-scrollbar-track {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+.modal-form::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+  border-radius: 4px;
+}
+.modal-form::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
