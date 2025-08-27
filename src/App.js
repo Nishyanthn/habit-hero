@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import OpeningPage from "./frontend/components/OpeningPage";
 import SignIn from "./frontend/components/SignIn";
 import SignUp from "./frontend/components/SignUp";
+import Dashboard from "./frontend/components/Dashboard";
+
 
 // Styles
 import "./frontend/Styles/OpeningPage.css";
@@ -24,6 +26,10 @@ function App() {
 
         {/* Sign Up Page */}
         <Route path="/signup" element={<SignUp />} />
+
+        {/* Dashboard Page */}
+        <Route path="/dashboard" element={<Dashboard />} />
+       
       </Routes>
     </Router>
   );

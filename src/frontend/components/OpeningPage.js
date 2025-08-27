@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import for redirection
 import { Target, BarChart2, CalendarCheck, Award } from 'lucide-react';
-import { useNavigate } from "react-router-dom";
-
 import '../Styles/OpeningPage.css'; // Import the CSS file
 
-  
+export default function Opening() {
+  const navigate = useNavigate(); // Hook for navigation
 
-// Main App Component for the Landing Page
-export default function OpeningPage() {
-  const navigate = useNavigate();
-  const [isMounted, setIsMounted] = React.useState(false);
-  React.useEffect(() => {
-    // Set mounted to true after a short delay to ensure the animation runs
+  // --- State for the sign-up form ---
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  // --- State for animations ---
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
     const timer = setTimeout(() => setIsMounted(true), 100);
     return () => clearTimeout(timer);
   }, []);
@@ -43,6 +48,41 @@ export default function OpeningPage() {
     },
   ];
 
+  // --- Handle form submission ---
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      const response = await fetch('http://localhost:5000/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess('Account created! Redirecting to sign in...');
+        setTimeout(() => {
+          navigate('/signin'); // Redirect to sign-in page
+        }, 2000);
+      } else {
+        setError(data.msg || 'An unknown error occurred.');
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+      setError('Could not connect to the server. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
   return (
     <div className="app-container">
       {/* Header */}
@@ -52,10 +92,10 @@ export default function OpeningPage() {
             <span className="logo-accent">Habit</span> Hero
           </div>
           <div className="nav-buttons">
-            <button onClick={() => navigate("/signin")}className="btn-signin">
+            <button className="btn-signin" onClick={() => navigate('/signin')}>
               Sign In
             </button>
-            <button onClick={() => navigate("/signup")} className="btn-signup">
+            <button className="btn-signup" onClick={() => navigate('/signup')}>
               Sign Up
             </button>
           </div>
@@ -80,7 +120,8 @@ export default function OpeningPage() {
 
         {/* Features Section */}
         <section id="features" className="features-section">
-          <div className="container">
+          {/* ... (feature mapping code remains the same) ... */}
+           <div className="container">
             <div className="section-header">
               <h2>Why You'll Love <span className="text-accent-dark">Habit Hero</span></h2>
               <p>Everything you need to build a better you.</p>
@@ -121,18 +162,44 @@ export default function OpeningPage() {
             <h2 className="section-title">Ready to Build a Better You?</h2>
             <p className="section-subtitle">Create your free account and start your journey with Habit Hero today. Consistency is just a click away.</p>
             <div className="signup-form-card">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="input-group">
-                  <input type="text" placeholder="Your Name" className="form-input" />
+                  <input 
+                    type="text" 
+                    placeholder="Your Name" 
+                    className="form-input" 
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
                 </div>
                 <div className="input-group">
-                  <input type="email" placeholder="Your Email Address" className="form-input" />
+                  <input 
+                    type="email" 
+                    placeholder="Your Email Address" 
+                    className="form-input" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
                 </div>
                 <div className="input-group">
-                  <input type="password" placeholder="Choose a Password" className="form-input" />
+                  <input 
+                    type="password" 
+                    placeholder="Choose a Password" 
+                    className="form-input" 
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
                 </div>
-                <button type="submit" className="btn-submit">
-                  Create Your Free Account
+                
+                {/* --- Message Display --- */}
+                {error && <p className="auth-error-message">{error}</p>}
+                {success && <p className="auth-success-message">{success}</p>}
+
+                <button type="submit" className="btn-submit" disabled={isLoading}>
+                  {isLoading ? 'Creating Account...' : 'Create Your Free Account'}
                 </button>
               </form>
             </div>
