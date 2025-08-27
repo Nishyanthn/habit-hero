@@ -1,0 +1,109 @@
+.notes-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(17, 24, 39, 0.8);
+  display: grid;
+  place-items: center;
+  z-index: 100;
+  animation: fadeIn 0.3s ease;
+}
+
+.notes-modal-content {
+  background-color: var(--sidebar-bg);
+  color: var(--text-primary);
+  border-radius: 0.75rem;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.4s ease;
+  border: 1px solid var(--border-color);
+}
+
+.notes-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.notes-modal-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notes-list {
+  padding: 1.5rem 2rem;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.note-item {
+  background-color: var(--stats-panel-bg);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
+}
+
+.note-item p {
+  margin: 0 0 0.5rem 0;
+  white-space: pre-wrap; /* Respects line breaks */
+}
+
+.note-item .note-date {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.no-notes-message {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.note-form {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.note-form textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-gradient-start);
+  color: var(--text-primary);
+  font-size: 1rem;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.note-form button {
+  background-color: var(--accent-color);
+  color: var(--brand-black);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  align-self: flex-end;
+}
+
+.note-form button:hover {
+  background-color: var(--accent-dark);
+}

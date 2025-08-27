@@ -1,0 +1,329 @@
+.analytics-content {
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.analytics-header {
+  margin-bottom: 2rem;
+}
+.analytics-header h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+.analytics-header p {
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.left-column, .right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* --- Key Metrics (Condensed) --- */
+.stats-grid-condensed {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.stat-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px var(--shadow-color);
+}
+.stat-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 1rem auto;
+}
+.stat-card h3 {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin: 0;
+}
+.stat-card p {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 0.5rem;
+}
+
+/* --- Habit Performance --- */
+.performance-container {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+.performance-container h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+}
+.performance-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.habit-performance-item {
+  display: grid;
+  grid-template-columns: 150px 1fr 100px;
+  align-items: center;
+  gap: 1rem;
+}
+.habit-name {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.progress-bar-container {
+  width: 100%;
+  height: 12px;
+  background-color: var(--stats-panel-bg);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.5s ease-in-out;
+}
+.percentage {
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: right;
+  font-size: 0.9rem;
+}
+.no-data-message {
+  color: var(--text-secondary);
+}
+
+/* --- AI Suggestions --- */
+.ai-suggestions-container {
+  background: linear-gradient(135deg, var(--brand-black), #2c2c2c);
+  color: #f9fafb;
+  border-radius: 0.75rem;
+  padding: 2rem;
+}
+.ai-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--accent-color);
+}
+.ai-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.ai-subtitle {
+  color: var(--text-secondary);
+  margin: 0.5rem 0 1.5rem 0;
+  max-width: 600px;
+}
+.ai-goals {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+.ai-goals button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    color: #f9fafb;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.ai-goals button:hover {
+    background-color: var(--accent-color);
+    color: var(--brand-black);
+    border-color: var(--accent-dark);
+}
+.suggestion-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  display: none; /* Hidden by default */
+}
+.suggestion-card.active {
+    display: block; /* Shown when active */
+    animation: fadeIn 0.5s;
+}
+.suggestion-card h3 { margin: 0 0 0.5rem 0; }
+.suggestion-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem; }
+.suggestion-card button {
+  background-color: var(--accent-color);
+  color: var(--brand-black);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.suggestion-card button:hover { background-color: var(--accent-dark); }
+
+/* --- Achievements --- */
+.achievements-container {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+.achievements-container h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+}
+.badges-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0.4;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  background: none;
+  border: none;
+  text-align: left;
+  width: 100%;
+  padding: 0;
+  font-family: var(--font-family);
+}
+.badge:disabled {
+  cursor: default;
+}
+.badge.earned {
+  opacity: 1;
+  cursor: pointer;
+}
+.badge.earned:hover {
+    transform: translateX(5px);
+}
+.badge-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background-color: var(--stats-panel-bg);
+  color: var(--text-secondary);
+}
+.badge.earned .badge-icon {
+  background-color: var(--accent-light);
+  color: var(--accent-dark);
+}
+.badge-info h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.badge-info p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* --- Achievement Modal Styles --- */
+.achievement-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(17, 24, 39, 0.8);
+  display: grid;
+  place-items: center;
+  z-index: 200;
+  animation: fadeIn 0.3s ease;
+}
+.achievement-modal-content {
+  background: var(--sidebar-bg);
+  color: var(--text-primary);
+  border-radius: 1rem;
+  padding: 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  width: 90%;
+  max-width: 400px;
+  animation: zoomIn 0.4s ease;
+}
+.close-modal-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.modal-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem auto;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background-color: var(--accent-color);
+  color: var(--brand-black);
+}
+.achievement-modal-content h2 {
+  font-size: 2rem;
+  margin: 0;
+  color: var(--accent-dark);
+}
+.achievement-modal-content h3 {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+}
+.achievement-modal-content p {
+  color: var(--text-secondary);
+}
+
+/* --- Confetti Animation --- */
+.confetti {
+  width: 15px;
+  height: 15px;
+  background-color: #fde047;
+  position: absolute;
+  left: 50%;
+  animation: confetti-fall 3s linear infinite;
+}
+.confetti:nth-child(2) { background-color: #22c55e; animation-delay: -0.2s; }
+.confetti:nth-child(3) { background-color: #6366f1; animation-delay: -0.4s; }
+.confetti:nth-child(4) { background-color: #ef4444; animation-delay: -0.6s; }
+.confetti:nth-child(5) { background-color: #fde047; animation-delay: -0.8s; }
+.confetti:nth-child(6) { background-color: #22c55e; animation-delay: -1s; }
+.confetti:nth-child(7) { background-color: #6366f1; animation-delay: -1.2s; }
+.confetti:nth-child(8) { background-color: #ef4444; animation-delay: -1.4s; }
+.confetti:nth-child(9) { background-color: #fde047; animation-delay: -1.6s; }
+.confetti:nth-child(10) { background-color: #22c55e; animation-delay: -1.8s; }
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-200px) rotateZ(0deg); opacity: 1; }
+  100% { transform: translateY(400px) rotateZ(360deg); opacity: 0; }
+}
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

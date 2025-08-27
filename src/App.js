@@ -7,12 +7,14 @@ import OpeningPage from "./frontend/components/OpeningPage";
 import SignIn from "./frontend/components/SignIn";
 import SignUp from "./frontend/components/SignUp";
 import Dashboard from "./frontend/components/Dashboard";
-
+import Analytics from "./frontend/components/Analytics"; // ✅ Import Analytics
 
 // Styles
 import "./frontend/Styles/OpeningPage.css";
 import "./frontend/Styles/SignIn.css";
 import "./frontend/Styles/SignUp.css";
+import "./frontend/Styles/Dashboard.css";  // ✅ Add Dashboard styles
+import "./frontend/Styles/Analytics.css";  // ✅ Add Analytics styles
 
 function App() {
   return (
@@ -29,7 +31,10 @@ function App() {
 
         {/* Dashboard Page */}
         <Route path="/dashboard" element={<Dashboard />} />
-       
+
+        {/* Analytics Page */}
+        <Route path="/dashboard/analytics" element={<Analytics />} /> 
+        {/* ✅ Nested under dashboard for better flow */}
       </Routes>
     </Router>
   );
