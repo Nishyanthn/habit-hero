@@ -1,9 +1,14 @@
 import React from 'react';
 import { Target, BarChart2, CalendarCheck, Award } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
+
 import '../Styles/OpeningPage.css'; // Import the CSS file
 
+  
+
 // Main App Component for the Landing Page
-export default function Opening() {
+export default function OpeningPage() {
+  const navigate = useNavigate();
   const [isMounted, setIsMounted] = React.useState(false);
   React.useEffect(() => {
     // Set mounted to true after a short delay to ensure the animation runs
@@ -47,10 +52,10 @@ export default function Opening() {
             <span className="logo-accent">Habit</span> Hero
           </div>
           <div className="nav-buttons">
-            <button className="btn-signin">
+            <button onClick={() => navigate("/signin")}className="btn-signin">
               Sign In
             </button>
-            <button className="btn-signup">
+            <button onClick={() => navigate("/signup")} className="btn-signup">
               Sign Up
             </button>
           </div>
