@@ -28,7 +28,7 @@ jwt = JWTManager(app)
 CORS(
 
     app,
-    resources={r"/api/*": {"origins": ["http://localhost:3000", "https://vercel.com/nishyanths-projects/habit-hero/Dd1FvDfaucG4yc3oPEmUmMHfYPjJ"]}},
+    resources={r"/api/*": {"origins": ["http://localhost:3000", "https://habit-hero-gamma.vercel.app/"]}},
     supports_credentials=True
 
 )
