@@ -4,6 +4,7 @@ import { Plus, Target, TrendingUp, CheckCircle, XCircle, Zap, Award, Book, Heart
 import AddHabitModal from './AddHabitModal';
 import Analytics from './Analytics';
 import NotesModal from './NotesModal';
+import Settings from './Settings'; // Import the new Settings component
 
 const getCategoryIcon = (category) => {
   switch (category?.toLowerCase()) {
@@ -71,7 +72,6 @@ export default function Dashboard() {
     let longestStreak = 0;
     let bestHabit = null;
     if (habits.length > 0) {
-        // Find the habit with the highest streak
         bestHabit = habits.reduce((prev, current) => (prev.streak > current.streak) ? prev : current);
         longestStreak = bestHabit.streak;
     }
@@ -109,6 +109,19 @@ export default function Dashboard() {
   };
 
   const greeting = new Date().getHours() < 12 ? 'Good Morning' : 'Good Evening';
+
+  const renderActivePage = () => {
+    switch (activePage) {
+        case 'dashboard':
+            return <HabitsView />;
+        case 'analytics':
+            return <Analytics habits={habits} onAddHabit={handleSaveHabit} />;
+        case 'settings':
+            return <Settings />;
+        default:
+            return <HabitsView />;
+    }
+  }
 
   const HabitsView = () => (
     <>
@@ -155,12 +168,12 @@ export default function Dashboard() {
           <nav className="sidebar-nav">
             <button className={`nav-item ${activePage === 'dashboard' ? 'active' : ''}`} onClick={() => setActivePage('dashboard')}>Dashboard</button>
             <button className={`nav-item ${activePage === 'analytics' ? 'active' : ''}`} onClick={() => setActivePage('analytics')}>Analytics</button>
-            <button className="nav-item">Settings</button>
+            <button className={`nav-item ${activePage === 'settings' ? 'active' : ''}`} onClick={() => setActivePage('settings')}>Settings</button>
           </nav>
           <div className="sidebar-footer"><button className="logout-btn"><LogOut size={16} /><span>Log Out</span></button></div>
         </aside>
         <main className="main-content">
-            {activePage === 'dashboard' ? <HabitsView /> : <Analytics habits={habits} onAddHabit={handleSaveHabit} />}
+            {renderActivePage()}
         </main>
         <aside className="stats-panel">
           <div className="stats-header"><h2>Your Progress</h2></div>

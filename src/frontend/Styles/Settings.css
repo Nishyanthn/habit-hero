@@ -1,0 +1,126 @@
+
+.settings-content {
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.settings-header {
+  margin-bottom: 2rem;
+}
+
+.settings-header h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.settings-header p {
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.settings-sections-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 800px;
+}
+
+.settings-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px var(--shadow-color);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.card-header .card-icon {
+  color: var(--accent-dark);
+}
+
+.card-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.settings-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.settings-form label {
+  display: block;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.settings-form input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--stats-panel-bg);
+  color: var(--text-primary);
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.settings-form input:disabled {
+    background-color: var(--border-color);
+    cursor: not-allowed;
+}
+
+.save-btn {
+  background-color: var(--accent-color);
+  color: var(--brand-black);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  float: right;
+}
+
+.save-btn:hover {
+  background-color: var(--accent-dark);
+}
+
+.danger-zone .card-header {
+    color: #ef4444; /* red-500 */
+}
+.danger-zone .card-header .card-icon {
+    color: #ef4444;
+}
+
+.danger-zone-content p {
+    color: var(--text-secondary);
+    margin: 0 0 1rem 0;
+}
+
+.delete-btn {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.delete-btn:hover {
+    background-color: #dc2626; /* red-600 */
+}
