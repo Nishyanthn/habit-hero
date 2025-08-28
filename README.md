@@ -10,9 +10,9 @@
 
 Habit Hero is a full-stack web application designed to help users create, track, and analyze their habits to build consistent, positive routines.
 
-**Live Frontend (Vercel):** https://habit-hero-gamma.vercel.app/
+**Live Frontend (Vercel):** [https://habit-hero-kappa.vercel.app/](https://habit-hero-kappa.vercel.app/)
 
-**Live Backend (Railway):** https://habit-hero-production-23e4.up.railway.app/
+**Live Backend (Railway):** [https://habit-hero-production-23e4.up.railway.app/](https://habit-hero-production-23e4.up.railway.app/)
 
 ---
 
