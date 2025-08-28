@@ -30,8 +30,11 @@ Here are a few glimpses of the Habit Hero application in action.
 
 *To add your own screenshots, take a picture of your running application, drag the image file into your GitHub repository, and then replace the placeholder links below with the new links to your images.*
 
-**Main Dashboard (Dark Theme)**
-![Dashboard View](https://placehold.co/600x400/1f2937/fde047?text=Dashboard)
+**Opening Page**
+[Opening View](images/dashboard.png)
+
+**Main Dashboard**
+![Dashboard View](images/dashboard.png)
 
 **Analytics & Gamification**
 ![Analytics Page](https://placehold.co/600x400/f9fafb/1f2937?text=Analytics+Page)
