@@ -31,16 +31,16 @@ Here are a few glimpses of the Habit Hero application in action.
 *To add your own screenshots, take a picture of your running application, drag the image file into your GitHub repository, and then replace the placeholder links below with the new links to your images.*
 
 **Opening Page**
-[Opening View](images/dashboard.png)
+[Opening View](images/homepage.png)  
 
 **Main Dashboard**
 ![Dashboard View](images/dashboard.png)
 
 **Analytics & Gamification**
-![Analytics Page](https://placehold.co/600x400/f9fafb/1f2937?text=Analytics+Page)
+![Analytics Page](images/analytics.png)
 
 **Add/Edit Habit Modal**
-![Add Habit Modal](https://placehold.co/600x400/ffffff/1f2937?text=Add+Habit+Modal)
+![Add Habit Modal](images/habit.png)
 
 ---
 
