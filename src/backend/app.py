@@ -2,7 +2,7 @@ import os
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, jwt_required, JWTManager, get_jwt_identity, unset_jwt_cookies, set_access_cookies
+from flask_jwt_extended import create_access_token, jwt_required, JWTManager, get_jwt_identity
 from flask_cors import CORS
 from dotenv import load_dotenv
 from bson import ObjectId
@@ -15,20 +15,16 @@ app = Flask(__name__)
 # --- Configuration ---
 app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
-app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
-app.config["JWT_COOKIE_SECURE"] = False 
-app.config["JWT_COOKIE_SAMESITE"] = "Lax"
+# --- NEW: Change JWT location from cookies to headers ---
+app.config["JWT_TOKEN_LOCATION"] = ["headers"]
 
 # --- Initialize Extensions ---
 mongo = PyMongo(app)
 jwt = JWTManager(app)
-
-# --- CORRECTED CORS SETUP ---
-# The trailing slash on the Vercel URL has been removed for an exact match.
 CORS(
     app,
     resources={r"/api/*": {"origins": ["http://localhost:3000", "https://habit-hero-gamma.vercel.app"]}},
-    supports_credentials=True
+    supports_credentials=True # Keep this for potential future use, though not strictly needed for token auth
 )
 
 # --- MongoDB Collection References ---
@@ -46,7 +42,8 @@ def serialize_doc(doc):
         doc['_id'] = str(doc['_id'])
     return doc
 
-# --- All your API routes remain the same ---
+# --- API Routes ---
+
 @app.route('/api/signup', methods=['POST'])
 def signup():
     if users_collection is None: return jsonify({"msg": "Database connection failed"}), 500
@@ -66,17 +63,16 @@ def signin():
     if not email or not password: return jsonify({"msg": "Email and password are required"}), 400
     user = users_collection.find_one({'email': email})
     if user and check_password_hash(user['password'], password):
+        # --- NEW: Return the token directly in the response body ---
         access_token = create_access_token(identity=email)
-        response = jsonify({"msg": "Login successful", "user": {"name": user['name'], "email": user['email']}})
-        set_access_cookies(response, access_token)
-        return response, 200
+        return jsonify({
+            "msg": "Login successful", 
+            "token": access_token,
+            "user": {"name": user['name'], "email": user['email']}
+        }), 200
     return jsonify({"msg": "Invalid credentials"}), 401
 
-@app.route('/api/logout', methods=['POST'])
-def logout():
-    response = jsonify({"msg": "Logout successful"})
-    unset_jwt_cookies(response)
-    return response, 200
+# Note: A backend logout route is no longer needed with this method.
 
 @app.route('/api/profile', methods=['GET'])
 @jwt_required()
@@ -127,7 +123,6 @@ def update_habit(habit_id):
         updated_habit = habits_collection.find_one({'_id': ObjectId(habit_id)})
         return jsonify(serialize_doc(updated_habit)), 200
     return jsonify({"msg": "Habit not found or user not authorized"}), 404
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
