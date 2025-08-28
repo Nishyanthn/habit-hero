@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import '../Styles/SignIn.css';// Your existing CSS file
+import '../Styles/SignIn.css';
 import { Unlock, Key, Smile, BarChart, TrendingUp } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';  
-// An array of catchy phrases with corresponding icons
+import { useNavigate, Link } from 'react-router-dom';
+
 const catchyPhrases = [
   { text: "Unlock Your Potential.", icon: <Unlock size={48} /> },
   { text: "Consistency is the Key.", icon: <Key size={48} /> },
@@ -14,62 +13,49 @@ const catchyPhrases = [
 
 export default function SignIn() {
   const navigate = useNavigate();
-  // --- State for the form inputs ---
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  // --- State for the animated phrases (from your original code) ---
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [fade, setFade] = useState(true);
 
-  // Effect to cycle through the catchy phrases
   useEffect(() => {
     const phraseInterval = setInterval(() => {
-      setFade(false); // Start fade out
+      setFade(false);
       setTimeout(() => {
         setPhraseIndex((prevIndex) => (prevIndex + 1) % catchyPhrases.length);
-        setFade(true); // Start fade in
+        setFade(true);
       }, 600);
     }, 4000);
-
     return () => clearInterval(phraseInterval);
   }, []);
 
   const currentPhrase = catchyPhrases[phraseIndex];
 
-  // --- Handle form submission ---
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    setError(''); // Clear previous errors
+    setError('');
 
     try {
-      const apiUrl = process.env.REACT_APP_API_URL;
+      const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
       const response = await fetch(`${apiUrl}/api/signin`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // IMPORTANT: This allows the browser to send the cookie from the backend
-        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        console.log('Sign in successful:', data.user);
+        // --- NEW: Save the token to localStorage ---
+        localStorage.setItem('habitHeroToken', data.token);
         navigate('/dashboard');
-        // On successful login, you would typically redirect to the dashboard
-        // For now, we'll just log it. Example: window.location.href = '/dashboard';
       } else {
-        // Set the error message from the backend response
         setError(data.msg || 'An unknown error occurred.');
       }
     } catch (error) {
-      console.error('An error occurred:', error);
       setError('Could not connect to the server. Please try again later.');
     } finally {
       setIsLoading(false);
@@ -78,61 +64,30 @@ export default function SignIn() {
 
   return (
     <div className="auth-container">
-      {/* Left side: The Form */}
       <div className="auth-form-section">
         <div className="auth-form-card">
-          <div className="auth-logo">
-            <span className="auth-logo-accent">Habit</span> Hero
-          </div>
+          <div className="auth-logo"><span className="auth-logo-accent">Habit</span> Hero</div>
           <h2 className="auth-title">Welcome Back!</h2>
           <p className="auth-subtitle">Sign in to continue your journey.</p>
-          
-          {/* --- The Form with onSubmit handler --- */}
           <form onSubmit={handleSubmit}>
             <div className="auth-input-group">
               <label htmlFor="email">Email</label>
-              <input 
-                type="email" 
-                id="email" 
-                placeholder="you@example.com" 
-                className="auth-form-input"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+              <input type="email" id="email" placeholder="you@example.com" className="auth-form-input" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             <div className="auth-input-group">
               <label htmlFor="password">Password</label>
-              <input 
-                type="password" 
-                id="password" 
-                placeholder="••••••••" 
-                className="auth-form-input"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <input type="password" id="password" placeholder="••••••••" className="auth-form-input" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </div>
-
-            {/* --- Error Message Display --- */}
             {error && <p className="auth-error-message">{error}</p>}
-
-            <button type="submit" className="auth-btn-submit" disabled={isLoading}>
-              {isLoading ? 'Signing In...' : 'Sign In'}
-            </button>
+            <button type="submit" className="auth-btn-submit" disabled={isLoading}>{isLoading ? 'Signing In...' : 'Sign In'}</button>
           </form>
-          <p className="auth-switch-text">
-            Don't have an account? <Link to="/signup">Sign Up</Link>
-            </p>
+          <p className="auth-switch-text">Don't have an account? <Link to="/signup">Sign Up</Link></p>
         </div>
       </div>
-
-      {/* Right side: The Animated Content */}
       <div className="auth-content-section">
         <div className="floating-shape shape1"></div>
         <div className="floating-shape shape2"></div>
         <div className="floating-shape shape3"></div>
-        
         <div className={`auth-phrase-wrapper ${fade ? 'fade-in' : 'fade-out'}`}>
           <div className="auth-phrase-icon">{currentPhrase.icon}</div>
           <h1 className="auth-phrase-text">{currentPhrase.text}</h1>
