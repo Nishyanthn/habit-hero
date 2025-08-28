@@ -15,7 +15,6 @@
   justify-content: center;
   padding: 2rem;
   box-sizing: border-box;
-  z-index: 10; /* Ensure form is above any potential overflow from the right side */
 }
 
 .auth-form-card {
@@ -48,6 +47,46 @@
   text-align: center;
   margin-bottom: 2rem;
 }
+
+/* --- NEW: Google Sign-In & Divider Styles --- */
+.google-signin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  min-height: 50px; /* Increased height to ensure visibility */
+  width: 100%;
+}
+
+/* This is a container for the button that Google's script will create */
+#googleSignInButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #9ca3af;
+  margin: 1.5rem 0;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e5e7eb;
+}
+.divider:not(:empty)::before {
+  margin-right: .25em;
+}
+.divider:not(:empty)::after {
+  margin-left: .25em;
+}
+
 
 .auth-input-group {
   margin-bottom: 1.5rem;
@@ -117,33 +156,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #1a1a1a;
   color: #ffffff;
   overflow: hidden;
-  background: linear-gradient(-45deg, #1a1a1a, #2c2c2c, #1a1a1a, #ca8a04);
-  background-size: 400% 400%;
-  animation: animate-gradient 15s ease infinite;
 }
 
-@keyframes animate-gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+.auth-content-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(135deg, rgba(253, 224, 71, 0.3), #1a1a1a 70%);
+  opacity: 0.8;
+  z-index: 1;
 }
 
-.auth-phrase-wrapper {
+.auth-phrase {
   position: relative;
   z-index: 2;
   text-align: center;
   padding: 2rem;
 }
 
-.auth-phrase-icon {
-  margin-bottom: 1.5rem;
-  color: #fde047;
-}
-
-.auth-phrase-text {
-  font-size: 3.5rem;
+.auth-phrase h1 {
+  font-size: 4rem;
   font-weight: 800;
   line-height: 1.2;
   text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
@@ -152,57 +186,14 @@
 /* --- Animations --- */
 .fade-in {
   opacity: 1;
-  transform: scale(1) translateY(0);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transform: translateY(0);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
 .fade-out {
   opacity: 0;
-  transform: scale(0.95) translateY(-15px);
-  transition: opacity 0.6s ease-in, transform 0.6s ease-in;
-}
-
-/* --- Floating Shapes --- */
-.floating-shape {
-  position: absolute;
-  display: block;
-  background-color: rgba(253, 224, 71, 0.1);
-  border-radius: 50%;
-  z-index: 1;
-  animation: float 20s infinite linear;
-}
-
-.shape1 {
-  width: 150px;
-  height: 150px;
-  left: 10%;
-  bottom: -50px;
-  animation-duration: 25s;
-}
-
-.shape2 {
-  width: 80px;
-  height: 80px;
-  right: 15%;
-  top: 10%;
-  animation-duration: 20s;
-  animation-delay: 5s;
-}
-
-.shape3 {
-  width: 120px;
-  height: 120px;
-  left: 30%;
-  top: 60%;
-  border-radius: 20%;
-  animation-duration: 18s;
-  animation-delay: 2s;
-}
-
-@keyframes float {
-  0% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-100px) rotate(180deg); }
-  100% { transform: translateY(0) rotate(360deg); }
+  transform: translateY(-10px);
+  transition: opacity 0.5s ease-in, transform 0.5s ease-in;
 }
 
 /* --- Responsive Design --- */
@@ -217,11 +208,11 @@
   }
 
   .auth-content-section {
-    min-height: 350px;
+    min-height: 300px;
     order: -1; /* Move content to the top on mobile */
   }
 
-  .auth-phrase-text {
+  .auth-phrase h1 {
     font-size: 2.5rem;
   }
 }
