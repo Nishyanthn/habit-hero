@@ -28,8 +28,6 @@ The application is **fully functional in the local development environment**. Th
 
 Here are a few glimpses of the Habit Hero application in action.
 
-*To add your own screenshots, take a picture of your running application, drag the image file into your GitHub repository, and then replace the placeholder links below with the new links to your images.*
-
 **Opening Page**
 [Opening View](images/homepage.png)  
 
