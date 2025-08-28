@@ -1,70 +1,112 @@
-# Getting Started with Create React App
+# Habit Hero: Build Better Routines 🚀
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React"/>
+  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask"/>
+  <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB"/>
+  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel"/>
+  <img src="https://img.shields.io/badge/Railway-0B0D0E?style=for-the-badge&logo=railway&logoColor=white" alt="Railway"/>
+</p>
 
-## Available Scripts
+Habit Hero is a full-stack web application designed to help users create, track, and analyze their habits to build consistent, positive routines.
 
-In the project directory, you can run:
+**Live Frontend (Vercel):** https://habit-hero-gamma.vercel.app/
 
-### `npm start`
+**Live Backend (Railway):** https://habit-hero-production-23e4.up.railway.app/
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### ⚠️ Deployment Note
 
-### `npm test`
+The application is **fully functional in the local development environment**. There is a persistent cross-origin (CORS) issue with the deployed version that prevents the live frontend from authenticating with the live backend.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**To review the fully functional application, please follow the local setup instructions below.**
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 📸 Screenshots
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Here are a few glimpses of the Habit Hero application in action.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+*To add your own screenshots, take a picture of your running application, drag the image file into your GitHub repository, and then replace the placeholder links below with the new links to your images.*
 
-### `npm run eject`
+**Main Dashboard (Dark Theme)**
+![Dashboard View](https://placehold.co/600x400/1f2937/fde047?text=Dashboard)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Analytics & Gamification**
+![Analytics Page](https://placehold.co/600x400/f9fafb/1f2937?text=Analytics+Page)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Add/Edit Habit Modal**
+![Add Habit Modal](https://placehold.co/600x400/ffffff/1f2937?text=Add+Habit+Modal)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## ✨ Features
 
-## Learn More
+This project successfully implements all core requirements and several optional features, providing a rich user experience.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### ✅ Core Features
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* **User Authentication**: Secure sign-up and sign-in functionality.
+* **Habit Creation**: Users can create habits with a **name**, **frequency** (daily/weekly), **category**, and a **start date**.
+* **Progress Tracking**: Daily **check-ins** to mark habits as complete and a dedicated **notes** section for each habit.
+* **Dynamic Dashboard**: A central hub to view and interact with all current habits.
+* **Analytics Page**: A dedicated page to visualize progress with metrics like **streaks** and daily **success rate**.
+* **Categorization**: Organize habits into categories like Health, Work, and Learning, including custom user-defined categories.
 
-### Code Splitting
+#### 🌟 Optional & Advanced Features
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+* **Gamification**: An **achievements system** where users unlock badges for milestones (e.g., "Perfect Week," "First Habit Created").
+* **AI Habit Coach**: An interactive section that provides **AI-powered suggestions** for new habits based on the user's selected goals.
+* **Full CRUD Functionality**: Users have complete control to **edit** and **delete** their habits.
+* **Modern UI/UX**: A clean, responsive design with a **light/dark theme toggle** and smooth animations.
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🛠️ Tech Stack
 
-### Making a Progressive Web App
+* **Frontend**: React.js
+* **Backend**: Python (Flask)
+* **Database**: MongoDB (with MongoDB Atlas)
+* **Authentication**: JWT (JSON Web Tokens)
+* **Deployment**: Vercel (Frontend), Railway (Backend)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 💻 Local Setup Instructions
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+To run the fully functional application on your local machine, please follow these steps.
 
-### Deployment
+### Prerequisites
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+* Node.js & npm
+* Python & pip
+* A MongoDB Atlas account (or a local MongoDB instance)
 
-### `npm run build` fails to minify
+### Backend Setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1.  Navigate to the `src/backend` directory.
+2.  Create a file named `.env`.
+3.  Add your `MONGO_URI` connection string and a `JWT_SECRET_KEY` to the `.env` file.
+4.  Install the required dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+5.  Start the backend server:
+    ```bash
+    flask run
+    ```
+    The backend will be running at `http://localhost:5000`.
+
+### Frontend Setup
+
+1.  Navigate to the `src/frontend` directory.
+2.  Install the required dependencies:
+    ```bash
+    npm install
+    ```
+3.  Start the frontend application:
+    ```bash
+    npm start
+    ```
+    The application will open in your browser at `http://localhost:3000`.
