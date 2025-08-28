@@ -29,7 +29,7 @@ The application is **fully functional in the local development environment**. Th
 Here are a few glimpses of the Habit Hero application in action.
 
 **Opening Page**
-[Opening View](images/homepage.png)  
+![Opening View](images/homepage.png)  
 
 **Main Dashboard**
 ![Dashboard View](images/dashboard.png)
